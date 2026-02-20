@@ -1,0 +1,28 @@
+program: src/hw1_imitation/train.py
+command:
+  - ${env}
+  - CUDA_VISIBLE_DEVICES=1
+  - python3
+  - ${program}
+  - ${args}
+method: bayes
+metric:
+  name: eval/mean_reward
+  goal: maximize
+parameters:
+  lr:
+    distribution: log_uniform_values
+    min: 1e-4
+    max: 1e-3
+  batch_size:
+    values: [64, 128, 256]
+  weight_decay:
+    distribution: uniform
+    min: 0.0
+    max: 0.0001
+  chunk_size:
+    values: [8, 16]
+  num_epochs:
+    values: [200, 400, 600]
+  flow_num_steps:
+    values: [10, 20] # Only useful if policy_type is flow, but harmless if mse
