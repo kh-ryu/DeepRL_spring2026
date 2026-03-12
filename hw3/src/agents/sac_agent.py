@@ -89,7 +89,7 @@ class SoftActorCritic(nn.Module):
         if self.auto_tune_temperature:
             # TODO(Section 3.5): Initialize log_alpha, alpha_optimizer, and target_entropy
             # Hint: Initialize log_alpha to log(temperature) so alpha starts at the given temperature
-            self.log_alpha = torch.tensor(np.log(temperature), requires_grad=True)
+            self.log_alpha = torch.tensor(np.log(temperature), requires_grad=True, device=ptu.device)
             self.alpha_optimizer = torch.optim.Adam([self.log_alpha], lr=alpha_learning_rate)
             self.target_entropy = -action_dim
             # ENDTODO
@@ -105,7 +105,7 @@ class SoftActorCritic(nn.Module):
         if self.auto_tune_temperature:
             # TODO(Section 3.5): Return the current learned temperature
             # skip here until we implement the temperature tuning
-            return None
+            return self.log_alpha.exp().item()
             # ENDTODO
         else:
             return self.temperature
@@ -293,7 +293,8 @@ class SoftActorCritic(nn.Module):
         loss, entropy, log_prob = self.actor_loss_reparametrize(obs)
 
         # TODO(Section 3.3): Add the entropy bonus to the actor loss: loss -= [your entropy bonus here]
-        loss -= self.get_temperature() * entropy
+        if self.use_entropy_bonus:
+            loss -= self.get_temperature() * entropy
         # ENDTODO
 
         self.actor_optimizer.zero_grad()
@@ -378,9 +379,9 @@ class SoftActorCritic(nn.Module):
                 info = critic_update
             else:
                 info = {k: critic_update[k] + info[k] for k in critic_update}
-            for k in info:
-                info[k] /= self.num_critic_updates
-            critic_infos.append(info)
+        for k in info:
+            info[k] /= self.num_critic_updates
+        critic_infos.append(info)
         # ENDTODO
 
         # TODO(Section 3.3): Enable the actor update (once you have implemented entropy)
