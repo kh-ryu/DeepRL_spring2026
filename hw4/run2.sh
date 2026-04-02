@@ -1,8 +1,7 @@
-# Format Copy for REINFORCE
-uv run hw4/train.py \
+uv run modal run --detach scripts/modal_train.py -- \
 --task format_copy \
 --algo reinforce \
---output_dir ./runs/format_copy_reinforce \
+--output_dir /vol/runs/modal_format_copy_reinforce \
 --steps 51 \
 --batch_size 8 \
 --group_size 6 \

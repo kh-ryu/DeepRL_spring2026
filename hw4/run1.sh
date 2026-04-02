@@ -1,8 +1,7 @@
-# Format Copy for GRPO
-HF_HUB_OFFLINE=1 uv run hw4/train.py \
+uv run modal run --detach scripts/modal_train.py -- \
 --task format_copy \
 --algo grpo \
---output_dir ./runs/format_copy_grpo \
+--output_dir /vol/runs/modal_format_copy_grpo \
 --steps 51 \
 --batch_size 8 \
 --group_size 6 \

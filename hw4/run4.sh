@@ -1,7 +1,7 @@
-uv run hw4/train.py \
+uv run modal run --detach scripts/modal_train.py -- \
 --task math_hard \
 --algo grpo \
---output_dir ./runs/math_hard_grpo \
+--output_dir /vol/runs/modal_math_hard_grpo \
 --steps 501 \
 --batch_size 8 \
 --group_size 8 \

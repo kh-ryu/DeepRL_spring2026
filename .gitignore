@@ -1,0 +1,5 @@
+hw4_gradescope_submission/
+
+# General artifacts
+__pycache__/
+*.pyc

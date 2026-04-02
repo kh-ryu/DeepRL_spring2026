@@ -1,8 +1,7 @@
-# Math hard with REINFORCE
-uv run hw4/train.py \
+uv run modal run --detach scripts/modal_train.py -- \
 --task math_hard \
 --algo reinforce \
---output_dir ./runs/math_hard_reinforce \
+--output_dir /vol/runs/modal_math_hard_reinforce \
 --steps 201 \
 --batch_size 8 \
 --group_size 8 \
